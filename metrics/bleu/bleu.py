@@ -17,8 +17,9 @@ import datasets
 
 import evaluate
 
-from .nmt_bleu import compute_bleu  # From: https://github.com/tensorflow/nmt/blob/master/nmt/scripts/bleu.py
+#from .nmt_bleu import compute_bleu  # From: https://github.com/tensorflow/nmt/blob/master/nmt/scripts/bleu.py
 from .tokenizer_13a import Tokenizer13a
+import nmt_bleu_modified
 
 
 _CITATION = """\
@@ -119,7 +120,7 @@ class Bleu(evaluate.Metric):
 
         references = [[tokenizer(r) for r in ref] for ref in references]
         predictions = [tokenizer(p) for p in predictions]
-        score = compute_bleu(
+        score = nmt_bleu_modified.compute_bleu(
             reference_corpus=references, translation_corpus=predictions, max_order=max_order, smooth=smooth
         )
         (bleu, precisions, bp, ratio, translation_length, reference_length) = score
